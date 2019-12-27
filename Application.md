@@ -36,14 +36,53 @@ server:
     # https私钥路径
     keyFile: "@app/conf/site.key"
 
-    # 插件组件列表，不指定时默认支持gzip, 指定该字段但列表为空时，表示不使用任何插件
+    # 插件组件列表，不指定时默认支持gzip, 指定该字段但列表为空时，表示不使用任何插件,可选file
     plugins: ["gzip"]
+
+    # 最大http头字节数, 默认1MB
+    maxHeaderBytes: 1048576
+
+    # 请求读取超时, 默认30s
+    readTimeout:    "30s"
+
+    # 请求发送超时, 默认30s
+    writeTimeout:   "30s"
+
+    # 状态日志输出间隔, 默认60s
+    statsInterval:  "60s"
+
+    # 是否输出访问日志, 默认true
+    enableAccessLog: true
+
+    # debug 错误日志完整栈输出
+    debug: true
 
 # 组件配置
 components:
-    # 日志组件
-    log: {...}
+    log:
+        # 总级别开关
+        levels: "ALL"
+        targets:
+          info:
+            # 信息日志 file-文件输出 console-控制台输出
+            name:      "file"
+            levels:   "DEBUG,INFO,NOTICE"
+            filePath: "@runtime/info.log"
+            # rotate:     "daily"
+            # maxLogFile: 10
+          error:
+            # 错误日志(文件输出)
+            name:      "file"
+            levels:     "WARN,ERROR,FATAL"
+            filePath:   "@runtime/error.log"
+            # rotate:     "daily"
+            # maxLogFile: 10
+          console:
+            # 控制台日志(用于开发调试)
+            levels: "ALL"
     # 其它组件
+
+
 ```
 
 ## 初始化流程：
@@ -53,7 +92,7 @@ components:
     - 初始化config, container, server三个核心组件
     - 添加核心组件的默认配置
     - 注册路由、日志等核心组件
-2. 调用App及其组件的方法，定制化各种组件，如添加自定义路由规则等，通常这不需要执行，应该通过配置文件进行配置。
+2. 调用App()及其组件的方法，定制化各种组件，如添加自定义路由规则等，通常这不需要执行，应该通过配置文件进行配置。
 3. 调用pgo2.Run()，启动http服务或处理command命令
 
 ## 组件
@@ -105,7 +144,7 @@ redis:
 ```go
 map[string]string{
     "router": "@pgo2/Router",        // 路由组件
-    "log":    "@pgo2/Log",           // 日志组件
+    "log":    "@pgo2/logs/Log",           // 日志组件
     "status": "@pgo2/Status",        // 状态码组件
     "i18n":   "@pgo2/I18n",          // 国际化组件
     "view":   "@pgo2/View",          // 视图组件

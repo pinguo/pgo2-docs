@@ -4,9 +4,7 @@
 app.yaml:
 
 server:
-    plugins:
-        - "gzip"
-        - "file"
+    plugins:["gzip","file"]
 ```
 - 手动
 ```
@@ -18,7 +16,7 @@ pgo2.App().Server().AddPlugin(v IPlugin) // 增加插件
 2. p2.HandleRequest(ctx)
 3. server.HandleRequest(ctx)
 
-PGO2内置插件只有`file`和`gzip`两个插件，file插件用于处理@public目录下的静态文件(必须带后缀)，gzip插件用于对输出进行gzip压缩。默认启用gzip插件，当需要禁用所有插件时，设置`app.server.plugins = []`。
+PGO2内置插件只有`file`和`gzip`两个插件，file插件用于处理@web/static目录下的静态文件(必须带后缀)，gzip插件用于对输出进行gzip压缩。默认启用gzip插件，当需要禁用所有插件时，设置`app.server.plugins = []`。
 
 
 ## 使用示例：
