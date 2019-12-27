@@ -17,6 +17,7 @@ PGO2应用框架即"Pinguo GO application framework 2.0"，是Camera360服务端
 * [上下文(Context)](Context.md)
 * [控制器(Controller)](Controller.md)
 * [插件(Plugin)](Plugin.md)
+* [获取对象(Object)](Object.md)
 * [客户端(Client)](Client/Overview.md)
     * [Db](Client/Db.md)
     * [Http](Client/Http.md)

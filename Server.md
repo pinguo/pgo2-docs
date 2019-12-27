@@ -42,6 +42,8 @@ server:
     # 提交body 限制，默认为go限制
     # maxPostBodySize:int64 
     
+    # debug 错误日志完整栈输出
+    # debug: true
 ```
 
 ## 插件说明

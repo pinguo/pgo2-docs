@@ -1,6 +1,6 @@
 # 视图组件(View)
 
-视图组件使用golang内置的`html/template`进行视图模板的渲染输出，支持通用模板(如页头、页脚)设置，视图模板文件位于`@app/view`目录下。
+视图组件使用golang内置的`html/template`进行视图模板的渲染输出，支持通用模板(如页头、页脚)设置，视图模板文件位于`@app/web/template`目录下。
 
 ## 配置文件
 
@@ -20,13 +20,13 @@ view:
 
 ```go
 // 渲染并输出到stdout
-pgo2.App().View().Display(os.Stdout, "hello.html", pgo2.Map{"name": "tom", "age": 25})
+pgo2.App().View().Display(os.Stdout, "hello.html", map[string]interface{}{"name": "tom", "age": 25})
 
 // 渲染并获取输出bytes
-data := pgo2.App().View().Render("hello.html", pgo2.Map{"name": "tom", "age": 25})
+data := pgo2.App().View().Render("hello.html", map[string]interface{}{"name": "tom", "age": 25})
 
 // 控制器中渲染并输出
-ctr.View("hello.html", pgo2.Map{"name": "tom", "age": 25})
+ctr.View("hello.html", map[string]interface{}{"name": "tom", "age": 25})
 ```
 
 

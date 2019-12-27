@@ -2,7 +2,7 @@
 
 - 上下文存在于一个请求的生命周期中
 - 包含一个请求的上下文信息(输入、输出、自定义数据)
-- 继承pgo2.Object的类通过pgo2.GetObj()会自动注入当前上下文
+- 继承pgo2.Object的类通过pgo2.GetObj(), pgo2.GetObjPool(),pgo2.GetObjSingle()会自动注入当前上下文
 
 请求结束后默认会输出请求访问日志，如果不希望输出访问日志或想输出自定义格式的访问日志可以通过设置`app.server.enableAccessLog`为false来关闭。
 
@@ -10,7 +10,7 @@
 
 ```go
 // 获取当前对象的上下文信息
-ctx := this.GetContext()
+ctx := this.Context()
 
 // 获取请求数据
 ctx.Param("p1", "")  // 获取GET/POST参数，默认空串
@@ -59,5 +59,5 @@ ctx.ElapseMs()	// 获取当前请求耗时
 ctx.LogId()		// 获取当前请求日志ID
 ctx.Process(plugins)   // 运行server 插件
 ctx.Start(plugins) // 初始化context 
-ctx.HttpRW(enableAccessLog bool, r *http.Request, w http.ResponseWriter) // 赋值请求上下文
+ctx.HttpRW(debug, enableAccessLog bool, r *http.Request, w http.ResponseWriter) // 赋值请求上下文
 ```

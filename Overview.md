@@ -1,9 +1,23 @@
 # 项目背景
+pgo2应用框架即"PinGuo GO application framework 2.0"，是Camera360服务端团队基于[pgo](https://github.com/pinguo/pgo)研发的一款简单、高性能、组件化的GO应用框架。
+受益于GO语言高性能与原生协程，使用pgo2可快速地开发出高性能的web应用程序。
 
 # 基准测试
+主要测试PGO2框架与PGO的性能差异。
+
+说明:
+- 测试机为4核8G阿里云主机
+- go版本为1.13.5, GOMAXPROCS=4
+- 输出均为字符串{"code": 200, "message": "success","data": "hello world"}
+- 命令: ab -n 1000000 -c 100 -k 'http://target-ip:8000/welcome/index'
+
+分类 | QPS | 平均响应时间(ms) |CPU
+---- | ---- | ---- | -----
+pgo1 | 59917.26 | 1.669 | 63.36%
+pgo2 | 62442.44 | 1.601 | 41.52%
 
 
-
+pgo与其他比较(https://github.com/pinguo/pgo-docs)
 
 # 环境要求
 - GO 1.13+
@@ -13,7 +27,8 @@
 
 # 项目目录
 规范：
-
+1.基于go module
+2. 按go标准规范，项目源码文件与目录使用小写形式,command,controller下的文件除外(testCommand.go,testController.go)
 
 ```
 <project>
@@ -180,7 +195,7 @@ go modules
         svc.SayHello(name, age, ip)
         ctx.ProfileStop("Welcome.SayHello")
     
-        data := pgo2.Map{
+        data := map[string]interface{}{
             "name": name,
             "age": age,
             "ip": ip,
@@ -194,7 +209,7 @@ go modules
     // 规则中捕获的参数通过动作函数参数传递，没有则为空字符串.
     // eg. "^/reg/eg/(\\w+)/(\\w+)$ => /welcome/regexp-example"
     func (w *WelcomeController) ActionRegexpExample(p1, p2 string) {
-        data := pgo2.Map{"p1": p1, "p2": p2}
+        data := map[string]interface{}{"p1": p1, "p2": p2}
         w.Json(data, http.StatusOK)
     }
     

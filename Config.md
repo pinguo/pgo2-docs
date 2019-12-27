@@ -40,7 +40,7 @@ procs := cfg.GetInt("app.GOMAXPROCS", 2) // 获取Integer, 不存在返回2
 price := cfg.GetFloat("params.goods.price", 0) // 获取Float, 不存在返回0
 enable := cfg.GetBool("params.detect.enable", false) // 获取Bool, 不存在返回false
 sliceName := cfg.GetSliceString("app.name") // 获取[]String，不存在返回nil
-sliceProcs := cfg.GetSliceInt("app.GOMAXPROCS") // 获取[]Integer, 不存在返回nil
+sliceProcs := cfg.GetSliceInt("app.procs") // 获取[]Integer, 不存在返回nil
 slicePrice := cfg.GetSliceFloat("params.goods.price") // 获取[]Float, 不存在返回nil
 sliceEnable := cfg.GetSliceBool("params.detect.enable") // 获取[]Bool, 不存在返回nil
 
