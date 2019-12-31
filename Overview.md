@@ -225,8 +225,8 @@ go modules
     package main
 
     import (
-        _ "command" // 导入控制器
-        _ "controller" // 导入控制器
+        _ "pgo2-demo/pkg/command" // 导入控制器
+        _ "pgo2-demo/pkg/controller" // 导入控制器
 
         "github.com/pinguo/pgo2"
     )
