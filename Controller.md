@@ -118,10 +118,16 @@ func (w *WelcomeController) GET() {
 
 ## 错误自定义处理
 ```go
+package controller
+
+import (
+	"github.com/pinguo/pgo2"
+)
+
 func init(){
 	container := pgo2.App().Container()
 	pgo2.App().Router().SetErrorController(container.Bind(&ErrorController{}))
-	// 当发生错误的时候，比如404 500 是否覆盖HTTP status code
+	// 设置是否覆盖 HTTP status code
 	pgo2.App().Router().SetHttpStatus(true)
 }
 
@@ -131,6 +137,6 @@ type ErrorController struct {
 
 // 此函数必须有 ErrorController 遵循接口iface.IErrorController
 func (e *ErrorController) Error(status int , message string){
-	e.Json(pgo2.EmptyObject,status, "ErrorController.Error " + message)
+	e.Json(pgo2.EmptyObject,status, "Controller.Error " + message)
 }
 ```
