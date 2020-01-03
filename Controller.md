@@ -8,6 +8,7 @@
 - 支持HandlePanic钩子，捕获未处理异常
 - 提供Json,Jsonp,Data,Xml,ProtoBuf方法，方便输出各种类型数据
 - 提供自定义数据类型输出方法Render
+- 预处理函数Prepare(),初始化当前controller的时候执行
 
 由于控制器是请求的入口，需要在main包中手动导入，为方便起见，建议不论controller层有多深统一在controller或command包的init方法中注册。
 
@@ -30,6 +31,11 @@ import (
 
 type WelcomeController struct {
     pgo2.Controller
+}
+
+// 预处理函数 可以用来过滤或者初始化数据
+func (w *WelcomeController) Prepare(){
+
 }
 
 // curl -v http://127.0.0.1:8000/welcome/index
@@ -137,6 +143,22 @@ type ErrorController struct {
 
 // 此函数必须有 ErrorController 遵循接口iface.IErrorController
 func (e *ErrorController) Error(status int , message string){
-	e.Json(pgo2.EmptyObject,status, "Controller.Error " + message)
+	// e.Json(pgo2.EmptyObject,status, "Controller.Error " + message)
+	switch status {
+	case 404:
+		e.error404(message)
+	default:
+		e.other(status,message)
+	}
+}
+
+func (e *ErrorController) error404(message string){
+	e.Json(pgo2.EmptyObject,404, "Controller.error404 " + message)
+	// e.View("404.html",message)
+}
+
+func (e *ErrorController) other(status int, message string){
+	e.Json(pgo2.EmptyObject,status, "Controller.other " + message)
+	// e.View("other.html",message)
 }
 ```
