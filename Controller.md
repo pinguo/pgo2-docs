@@ -12,9 +12,9 @@
 
 由于控制器是请求的入口，需要在main包中手动导入，为方便起见，建议不论controller层有多深统一在controller或command包的init方法中注册。
 
-HTTP控制器位于`pkg/controller`目录下，类后后缀为`Controller`。
+HTTP控制器位于`pkg/controller`目录下。
 
-命令控制器位于`pkg/command`目录下，类后缀为`Command`，运行命令控制器需要通过`--cmd`选项指定，例如：`bin/pgo-demo --cmd /test/index`。
+命令控制器位于`pkg/command`目录下，运行命令控制器需要通过`--cmd`选项指定，例如：`bin/pgo-demo --cmd /test/index`。
 
 ## 使用示例
 
@@ -29,24 +29,24 @@ import (
     "github.com/pinguo/pgo2"
 )
 
-type WelcomeController struct {
+type Welcome struct {
     pgo2.Controller
 }
 
 // 预处理函数 可以用来过滤或者初始化数据
-func (w *WelcomeController) Prepare(){
+func (w *Welcome) Prepare(){
 
 }
 
 // curl -v http://127.0.0.1:8000/welcome/index
 // 默认动作(index)
-func (w *WelcomeController) ActionIndex() {
+func (w *Welcome) ActionIndex() {
     w.Json("hello world", http.StatusOK)
 }
 
 // curl -v http://127.0.0.1:8000/welcome/view
 // 模板渲染
-func (w *WelcomeController) ActionView() {
+func (w *Welcome) ActionView() {
     // 获取并验证参数
     name := w.Context().ValidateParam("name", "hitzheng").Do()
     age := w.Context().ValidateParam("age", "100").Int().Do()
@@ -65,8 +65,8 @@ func (w *WelcomeController) ActionView() {
 // url的最后一段为动作名称，不存在则为index,
 // url的其余部分为控制器名称，不存在则为index,
 // 例如：/welcome/say-hello，控制器类名为
-// controller/WelcomeController 动作方法名为ActionSayHello
-func (w *WelcomeController) ActionSayHello() {
+// controller/Welcome 动作方法名为ActionSayHello
+func (w *Welcome) ActionSayHello() {
     ctx := w.Context() // 获取PGO2请求上下文件
 
     // 验证参数，提供参数名和默认值，当不提供默认值时，表明该参数为必选参数。
@@ -110,14 +110,14 @@ func (w *WelcomeController) ActionSayHello() {
 // 正则路由控制器，需要配置Router组件(components.router.rules)
 // 规则中捕获的参数通过动作函数参数传递，没有则为空字符串.
 // eg. "^/reg/eg/(\\w+)/(\\w+)$ => /welcome/regexp-example"
-func (w *WelcomeController) ActionRegexpExample(p1, p2 string) {
+func (w *Welcome) ActionRegexpExample(p1, p2 string) {
     data := map[string]interface{}{"p1": p1, "p2": p2}
     w.Json(data, http.StatusOK)
 }
 
 // RESTful动作，url中没有指定动作名，使用请求方法作为动作的名称(需要大写)
     // 例如：GET方法请求GET(), POST方法请求POST()
-func (w *WelcomeController) GET() {
+func (w *Welcome) GET() {
     w.Context().End(http.StatusOK, []byte("call restfull GET"))
 }
 ```
@@ -132,17 +132,18 @@ import (
 
 func init(){
 	container := pgo2.App().Container()
-	pgo2.App().Router().SetErrorController(container.Bind(&ErrorController{}))
+	// 设置ErrorController
+	pgo2.App().Router().SetErrorController(container.Bind(&Error{}))
 	// 设置是否覆盖 HTTP status code
 	pgo2.App().Router().SetHttpStatus(true)
 }
 
-type ErrorController struct {
+type Error struct {
 	pgo2.Controller
 }
 
-// 此函数必须有 ErrorController 遵循接口iface.IErrorController
-func (e *ErrorController) Error(status int , message string){
+// 此函数必须有 Error 遵循接口iface.IError
+func (e *Error) Error(status int , message string){
 	// e.Json(pgo2.EmptyObject,status, "Controller.Error " + message)
 	switch status {
 	case 404:
@@ -152,12 +153,12 @@ func (e *ErrorController) Error(status int , message string){
 	}
 }
 
-func (e *ErrorController) error404(message string){
+func (e *Error) error404(message string){
 	e.Json(pgo2.EmptyObject,404, "Controller.error404 " + message)
 	// e.View("404.html",message)
 }
 
-func (e *ErrorController) other(status int, message string){
+func (e *Error) other(status int, message string){
 	e.Json(pgo2.EmptyObject,status, "Controller.other " + message)
 	// e.View("other.html",message)
 }

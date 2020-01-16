@@ -28,7 +28,7 @@ pgo与其他比较(https://github.com/pinguo/pgo-docs)
 # 项目目录
 规范：
 1.基于go module
-2. 按go标准规范，项目源码文件与目录使用小写形式,command,controller下的文件除外(testCommand.go,testController.go)
+2. 按go标准规范，项目源码文件与目录使用小写形式
 
 ```
 <project>
@@ -85,7 +85,7 @@ go modules
     make start      # 编译并运行当前工程
     make stop       # 停止当前工程的进程
     make build      # 仅编译当前工程
-    make update     # go mod get
+    make update     # go get
     make install    # go mod download
     make pgo2       # 安装pgo2框架到当前工程
     make init       # 初始化工程目录
