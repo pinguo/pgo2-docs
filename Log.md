@@ -9,7 +9,8 @@
 ## 自定义
 ## pgo2.App().Log().SetTarget(name string, target ITarget) // (可选)自定义日志目标类
 
-## pgo2.App().Log().Target.SetFormatter(format IFormatter) // (可选) 自定义日志格式
+## pgo2.App().Log().Target("console").SetFormatter(format IFormatter) // (可选) 自定义日志格式
+## pgo2.App().Log().Target("file").SetFormatter(format IFormatter) // (可选) 自定义日志格式
 
 ## 配置文件
 ```yaml
