@@ -55,3 +55,5 @@ server:
 
 插件针对全局所有请求生效，若只需要处理某些特定url的请求，推荐在Controller.BeforeAction钩子中实现。
 
+## 自定义access log日志格式  注意这是log组件日志格式的一部分
+## pgo2.App().Server().SetAccessLogFormat(&lib.AccessLogFormatter{}) // (可选) 自定义日志格式中的message
