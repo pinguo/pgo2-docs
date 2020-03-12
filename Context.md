@@ -26,9 +26,9 @@ ctx.CookieAll()		// 获取所有Cookie
 ctx.ParamMap("p4")	// 获取GET/POST中p4[k1]=xx&p4[k2]=xx类型参数
 ctx.QueryMap("p5")	// 获取GET中p5[k1]=xx&p5[k2]=xx类型参数
 ctx.PostMap("p6")	// 获取POST中p6[k1]=xx&p6[k2]=xx类型参数
-ctx.QueryArray("p7") // 获取GET/POST中p7[]=v1&p7[]=v2类型参数
-ctx.ParamArray("p7") // 获取GET中p7[]=v1&p7[]=v2类型参数
-ctx.PostArray("p7") // 获取POST中p7[]=v1&p7[]=v2类型参数
+ctx.QueryArray("p7[]") // 获取GET/POST中p7[]=v1&p7[]=v2类型参数
+ctx.ParamArray("p7[]") // 获取GET中p7[]=v1&p7[]=v2类型参数
+ctx.PostArray("p7[]") // 获取POST中p7[]=v1&p7[]=v2类型参数
 
 ctx.Path()           // 获取请求路径
 ctx.ClientIp()       // 获取客户端IP
