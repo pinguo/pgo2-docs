@@ -27,7 +27,7 @@ type DemoPlugin struct {
 }
 
 // 处理服务请求
-func (d *DemoPluin) HandleRequest(ctx *Context) {
+func (d *DemoPlugin) HandleRequest(ctx iface.IContext) {
     // 检查是否需要该插件处理，不需要时直接返回
     // if !d.shouldApply() {
     //    return
