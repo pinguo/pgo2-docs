@@ -48,7 +48,7 @@ db.Query(query string, args ...interface{}) *sql.Rows // 查询多个文档(默�
 db.QueryContext(ctx context.Context, query string, args ...interface{}) *sql.Rows // 查询多个文档(指定上下文)
 db.Exec(query string, args ...interface{}) sql.Result // 非查询操作(默认超时上下文)
 db.ExecContext(ctx context.Context, query string, args ...interface{}) sql.Result // 非查询操作(指定上下文)
-db.Prepare(query string) IStmt // 批量操作，并返回一个状态对象(默认超时上下文)
+db.PrepareSql(query string) IStmt // 批量操作，并返回一个状态对象(默认超时上下文)
 db.PrepareContext(ctx context.Context, query string) IStmt // 批量操作，并返回一个状态对象(指定上下文)
 
 // 事务相关
@@ -60,7 +60,7 @@ tx.Query(query string, args ...interface{}) *sql.Rows // 查询多个文档(默�
 tx.QueryContext(ctx context.Context, query string, args ...interface{}) *sql.Rows // 查询多个文档(指定上下文)
 tx.Exec(query string, args ...interface{}) sql.Result // 非查询操作(默认超时上下文)
 tx.ExecContext(ctx context.Context, query string, args ...interface{}) sql.Result // 非查询操作(指定上下文)
-tx.Prepare(query string) IStmt  // 批量操作，并返回一个状态对象(默认超时上下文)
+tx.PrepareSql(query string) IStmt  // 批量操作，并返回一个状态对象(默认超时上下文)
 tx.PrepareContext(ctx context.Context, query string) IStmt // 批量操作，并返回一个状态对象(指定上下文)
 
 // 单列相关
@@ -171,15 +171,15 @@ func (m *MysqlController) ActionQuery() {
 }
 
 // curl -v http://127.0.0.1:8000/mysql/prepare
-// 使用db.Prepare/db.PrepareContext来执行批量操作，默认查询操作在
+// 使用db.PrepareSql/db.PrepareContext来执行批量操作，默认查询操作在
 // 从库上进行，其余操作在主库上进行，若当前db对象有过其它操作，则查询
 // 操作会复用之前的连接。
-func (m *MysqlController) ActionPrepare() {
+func (m *MysqlController) ActionPrepareSql() {
     // 获取db的上下文适配对象
     db := m.GetObj(adapter.NewDb()).(*adapter.Db)
 
     query := "INSERT INTO test1 (name, age) VALUES (?, ?)"
-    stmt := db.Prepare(query)
+    stmt := db.PrepareSql(query)
     defer stmt.Close()
 
     for i := 0; i < 10; i++ {
