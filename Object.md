@@ -10,14 +10,20 @@
 	Context() IContext
     # 获取对象并注入上下文
 	GetObj(obj IObject) IObject
-    # 从对象池获取对象并注入上下文
+    # 从对象池获取对象并注入上下文,如果有定义Prepare方法，会自动调用,funcName!=nil,params会传入funcName，否则params会传入Prepare
+    # (推荐用GetObjBox替换)
 	GetObjPool(className string, funcName IObjPoolFunc, params ...interface{}) IObject
+    # 从对象池获取对象并注入上下文,如果有定义Prepare方法，会自动调用，并把params传入
+	GetObjBox(className string, params ...interface{}) IObject
     # 获取单例对象并注入上下文
 	GetObjSingle(name string, funcName IObjSingleFunc, params ...interface{}) IObject
     # 获取对象并注入自定义上下文
     GetObjCtx(ctx IContext, obj IObject) IObject
     # 从对象池获取对象并注入自定义上下文
+    # (推荐用GetObjBoxCtx替换)
 	GetObjPoolCtx(ctr IContext, className string, funcName IObjPoolFunc, params ...interface{}) IObject
+    # 从对象池获取对象并注入自定义上下文
+	GetObjBoxCtx(ctr IContext, className string, params ...interface{}) IObject
     # 获取单例对象并注入自定义上下文
 	GetObjSingleCtx(ctx IContext, name string, funcName IObjSingleFunc, params ...interface{}) IObject
 ```
@@ -86,6 +92,32 @@ func (l *LogicData3) Show(){
 	fmt.Println("LogicData3 show data:" + l.data)
 }
 
+type LogicData4 struct {
+	pgo2.Object
+	data string
+}
+
+func (l *LogicData4) Prepare(a string,b int){
+	fmt.Println("LogicData4 Prepare a:", a,"b",b)
+}
+
+func (l *LogicData4) Show(){
+	fmt.Println("LogicData3 show data:" + l.data)
+}
+
+type LogicData5 struct {
+	pgo2.Object
+	data string
+}
+
+func (l *LogicData5) Prepare(params ...string){
+	fmt.Println("LogicData5 Prepare params:", params)
+}
+
+func (l *LogicData5) Show(){
+	fmt.Println("LogicData5 show data:" + l.data)
+}
+
 type Demo struct {
 	pgo2.Object
 }
@@ -93,12 +125,16 @@ type Demo struct {
 var LogicData1Class string
 var LogicData2Class string
 var LogicData3Class string
+var LogicData4Class string
+var LogicData5Class string
 // 如果需要用到对象池，需要先绑定对象
 func init (){
 	container := pgo2.App().Container()
 	LogicData1Class = container.Bind(&LogicData1{})
 	LogicData2Class = container.Bind(&LogicData2{})
 	LogicData3Class = container.Bind(&LogicData3{})
+	LogicData4Class = container.Bind(&LogicData4{})
+	LogicData5Class = container.Bind(&LogicData5{})
 }
 
 func (d *Demo) Index(){
@@ -109,7 +145,7 @@ func (d *Demo) Index(){
 	l0:=d.GetObjCtx(d.Context().Copy(), NewLogicData()).(*LogicData)
 	l0.Show()
 
-	// 从对象池获取对象并注入上下文
+	// 从对象池获取对象并注入上下文(推荐用GetObjBox替换)
 	l1 := d.GetObjPool(LogicData1Class, nil).(*LogicData1)
 	l1.Show()
 	// 从对象池获取对象并注入上下文,并初始化函数
@@ -126,6 +162,14 @@ func (d *Demo) Index(){
 	// 获取单例对象并注入自定义上下文
 	l5:=d.GetObjSingleCtx(d.Context().Copy(), "logicData3-1",NewLogicData3Single,"dataStr").(*LogicData3)
 	l5.Show()
+	
+	// 从对象池获取对象并注入上下文,并初始化函数
+    l6 := d.GetObjBox(LogicData4Class, "aa",22).(*LogicData4)
+    l6.Show()
+    
+    // 从对象池获取对象并注入上下文,并初始化函数
+    l7 := d.GetObjBox(LogicData5Class, "aa","bb").(*LogicData5)
+    l7.Show()
 }
 
 func NewDemo() *Demo{
