@@ -41,10 +41,10 @@ app.yaml
 components:
     # 组件ID，默认maxMind，国家、城市数据文件至少需要设置一个
     maxMind: 
-        # 国家数据文件(只包含国家数据，文件5M左右)
-        countryFile: "@app/conf/GeoLite2-Country.mmdb"
-        # 城市数据文件(包含省市等数据，文件50M左右)
-        cityFile: "@app/conf/GeoLite2-City.mmdb"
+        # 国家数据文件
+        countryFile: "@app/conf/GeoIP2-Country.mmdb"
+        # 城市数据文件
+        cityFile: "@app/conf/GeoIP2-City.mmdb"
 ```
 
 ## 使用示例
