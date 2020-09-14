@@ -42,9 +42,11 @@ components:
     # 组件ID，默认maxMind，国家、城市数据文件至少需要设置一个
     maxMind: 
         # 国家数据文件
-        countryFile: "@app/conf/GeoIP2-Country.mmdb"
+        countryFile: "@app/../geoip/GeoIP2-Country.mmdb"
         # 城市数据文件
-        cityFile: "@app/conf/GeoIP2-City.mmdb"
+        cityFile:    "@app/../geoip/GeoIP2-City.mmdb"
+        
+                
 ```
 
 ## 使用示例
