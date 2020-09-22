@@ -14,30 +14,38 @@ NewIgnore(status int, msg ...interface{}) *Error
 ## 使用说明
 
 ```go
+package controller
+
+import (
+
+    "github.com/pinguo/pgo2"
+    "github.com/pinguo/pgo2/perror"
+)
+
 type IndexController struct {
      pgo2.Controller
  }
 
  func (t *IndexController) BeforeAction(action string){
  	// curl -v http://127.0.0.1:8000/index/test1
- 	// 写warn日志
- 	// output : { "data": {}, "message": "panic 400", "status": 400 }
- 	// 可用于一些参数判断和过滤后终止程序等
-    if action == "test1"{
+    // 写warn日志
+    // output : { "data": {}, "message": "panic 400", "status": 400 }
+    // 可用于一些参数判断和过滤后终止程序等
+    if action == "Test1"{
         panic(perror.NewWarn(400,"panic 400"))
     }
-    
+
     // curl -v http://127.0.0.1:8000/index/test2
     // 写error日志
     // output : { "data": {}, "message": "panic 500", "status": 500 }
-    if action == "test2"{
+    if action == "Test2"{
         panic(perror.New(500,"panic 500"))
     }
-    
+
     // curl -v http://127.0.0.1:8000/index/test3
     // 不写日志
     // output : { "data": {}, "message": "panic 200", "status": 200 }
-    if action == "test3"{
+    if action == "Test3"{
         panic(perror.NewIgnore(200,"panic 200"))
     }
  }
