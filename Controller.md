@@ -128,7 +128,7 @@ func (w *Welcome) GET() {
 
 ```go
 
-package co
+package command
 
 import (
 	"flag"
@@ -139,7 +139,7 @@ import (
 )
 
 type Welcome struct {
-    pgo2.command
+    pgo2.Controller
 }
 
 // 
