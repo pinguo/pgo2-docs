@@ -148,24 +148,36 @@ type Welcome struct {
 
 // 
 func (w *Welcome) ParamsFlagIndex() map[string]int{
+	w.SetActionDesc("对命令行--cmd路径的描述，测试TT的描述")
 	var flagName int
     
-        flag.IntVar(&flagName, "flagname", 123, "Just for demo")
+    flag.IntVar(&flagName, "flagname", 123, "Just for demo")
     
-        flag.Parse()
+    flag.Parse()
     
-        return map[string]int{"flagName":flagName}
+    return map[string]int{"flagName":flagName}
 }
 
 // pgo2-demo --env=dev --cmd=/welcome/index
-// 运行一下命令会显示flag参数说明
-// pgo2-demo --env=dev --cmd=/welcome/index --help=1
+
 func (w *Welcome) ActionIndex() {
 	// 
 	var flagName = w.ParamsFlagIndex()["flagName"]
     w.Json(flagName, http.StatusOK)
 }
 
+// 运行一下命令会显示flag参数说明
+// pgo2-demo --env=dev --cmd=/welcome/index --help=1
+// output:
+Global parameters:
+     	  --base string    	set base path (optional), eg. --base=/base/path
+    	  --cmd string    	set running cmd (optional), eg. --cmd=/foo/bar
+    	  --env string    	set running env (optional), eg. --env=online
+    	  --help string    	Displays a list of CMD controllers used (optional), eg. --help=1
+
+The path list:
+  --cmd=/testA/tT 	对命令行--cmd路径的描述，测试TT的描述
+    	  --flagname int    	Just for demo (default 123)
 
 ```
 ## 错误自定义处理
