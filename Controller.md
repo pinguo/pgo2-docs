@@ -162,7 +162,7 @@ func (w *Welcome) ParamsFlagIndex() map[string]int{
 // pgo2-demo --env=dev --cmd=/welcome/index --help=1
 func (w *Welcome) ActionIndex() {
 	// 
-	var flagName = t.ParamsFlagIndex()["flagName"]
+	var flagName = w.ParamsFlagIndex()["flagName"]
     w.Json(flagName, http.StatusOK)
 }
 
