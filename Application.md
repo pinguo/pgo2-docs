@@ -168,6 +168,12 @@ map[string]string{
 - `--env production`, 指定程序的环境配置目录，默认为develop
 - `--cmd /foo/bar`, 指定程序为命令行模式，并运行指定命令，默认为WEB模式
 - `--base /base/path`, 指定基础目录，默认为项目根目录，通常在单测时需要指定
-- `--cmdList`, 显示所有命令，包括cmd参数列表 
+- `--help`, 显示所有命令，包括cmd参数列表和每个cmd路径下的flag参数说明 
+
+```go
+--env production --help // 显示全局参数和--cmd的所有路径
+--env production --cmd --help // 显示全局参数和--cmd的所有路径和每个路径的所有flag参数(flag要写在特定的方法里)
+--env production --cmd=/xxx/xx --help // 显示全局参数和--cmd的当前路径的所有flag参数(flag要写在特定的方法里 ParamsFlagXx)
+```
 
 

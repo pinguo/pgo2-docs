@@ -122,6 +122,48 @@ func (w *Welcome) GET() {
 }
 ```
 
+## 命令模式 显示自定义flag参数描述
+  * ParamsFlag + 方法名
+  * --help 的时候会显示flag相关的参数说明
+
+```go
+
+package co
+
+import (
+	"flag"
+
+
+
+    "github.com/pinguo/pgo2"
+)
+
+type Welcome struct {
+    pgo2.command
+}
+
+// 
+func (w *Welcome) ParamsFlagIndex() map[string]int{
+	var flagName int
+    
+        flag.IntVar(&flagName, "flagname", 123, "Just for demo")
+    
+        flag.Parse()
+    
+        return map[string]int{"flagName":flagName}
+}
+
+// curl -v http://127.0.0.1:8000/welcome/index
+// 默认动作(index)
+func (w *Welcome) ActionIndex() {
+	// 
+	var flagName = t.ParamsFlagIndex()["flagName"]
+    w.Json(flagName, http.StatusOK)
+}
+
+// 运行一下命令会显示flag参数说明
+pgo2-demo --env=dev --cmd=/welcome/index --help=1
+```
 ## 错误自定义处理
 ```go
 package controller
