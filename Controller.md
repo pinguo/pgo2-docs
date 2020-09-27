@@ -128,6 +128,10 @@ func (w *Welcome) GET() {
 
 ```go
 
+// pgo2-demo --env production --help // 显示全局参数和--cmd的所有路径
+// pgo2-demo --env production --cmd --help // 显示全局参数和--cmd的所有路径和每个路径的所有flag参数(flag要写在特定的方法里)
+// pgo2-demo --env production --cmd=/xxx/xx --help // 显示全局参数和--cmd的当前路径的所有flag参数(flag要写在特定的方法里 ParamsFlagXx)
+
 package command
 
 import (
