@@ -153,16 +153,16 @@ func (w *Welcome) ParamsFlagIndex() map[string]int{
         return map[string]int{"flagName":flagName}
 }
 
-// curl -v http://127.0.0.1:8000/welcome/index
-// 默认动作(index)
+// pgo2-demo --env=dev --cmd=/welcome/index
+// 运行一下命令会显示flag参数说明
+// pgo2-demo --env=dev --cmd=/welcome/index --help=1
 func (w *Welcome) ActionIndex() {
 	// 
 	var flagName = t.ParamsFlagIndex()["flagName"]
     w.Json(flagName, http.StatusOK)
 }
 
-// 运行一下命令会显示flag参数说明
-pgo2-demo --env=dev --cmd=/welcome/index --help=1
+
 ```
 ## 错误自定义处理
 ```go
