@@ -166,9 +166,14 @@ func (w *Welcome) ActionIndex() {
     w.Json(flagName, http.StatusOK)
 }
 
-// 运行一下命令会显示flag参数说明
-// pgo2-demo --env=dev --cmd=/welcome/index --help=1
-// output:
+
+```
+
+## 运行一下命令会显示flag参数说明
+  * pgo2-demo --env=dev --cmd=/welcome/index --help=1
+  *  output:
+```go
+
 Global parameters:
      	  --base string    	set base path (optional), eg. --base=/base/path
     	  --cmd string    	set running cmd (optional), eg. --cmd=/foo/bar
