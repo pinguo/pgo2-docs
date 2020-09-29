@@ -17,6 +17,7 @@ components:
         # readTimeout: "10s"
         # 写入超时，默认10秒
         # writeTimeout: "10s"
+        # mode: 1/2 1-异步，不能保证执行顺序，2-强制保证顺序
 ```
 
 其中`dsn`配置字段参考[mgo.Dial()](https://godoc.org/github.com/globalsign/mgo#Dial)。默认的dsn参数：
