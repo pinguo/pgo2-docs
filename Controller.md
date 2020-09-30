@@ -122,69 +122,6 @@ func (w *Welcome) GET() {
 }
 ```
 
-## 命令模式 显示自定义flag参数描述
-  * ParamsFlag + 方法名
-  * --help 的时候会显示flag相关的参数说明
-
-```go
-
-// pgo2-demo --env production --help // 显示全局参数和--cmd的所有路径
-// pgo2-demo --env production --cmd --help // 显示全局参数和--cmd的所有路径和每个路径的所有flag参数(flag要写在特定的方法里)
-// pgo2-demo --env production --cmd=/xxx/xx --help // 显示全局参数和--cmd的当前路径的所有flag参数(flag要写在特定的方法里 ParamsFlagXx)
-
-package command
-
-import (
-	"flag"
-
-
-
-    "github.com/pinguo/pgo2"
-)
-
-type Welcome struct {
-    pgo2.Controller
-}
-
-// 
-func (w *Welcome) ParamsFlagIndex() map[string]int{
-	w.SetActionDesc("对命令行--cmd路径的描述，测试TT的描述")
-	var flagName int
-    
-    flag.IntVar(&flagName, "flagname", 123, "Just for demo")
-    
-    flag.Parse()
-    
-    return map[string]int{"flagName":flagName}
-}
-
-// pgo2-demo --env=dev --cmd=/welcome/index
-
-func (w *Welcome) ActionIndex() {
-	// 
-	var flagName = w.ParamsFlagIndex()["flagName"]
-    w.Json(flagName, http.StatusOK)
-}
-
-
-```
-
-## 运行一下命令会显示flag参数说明
-  * pgo2-demo --env=dev --cmd=/welcome/index --help=1
-  *  output:
-```go
-
-Global parameters:
-     	  --base string    	set base path (optional), eg. --base=/base/path
-    	  --cmd string    	set running cmd (optional), eg. --cmd=/foo/bar
-    	  --env string    	set running env (optional), eg. --env=online
-    	  --help string    	Displays a list of CMD controllers used (optional), eg. --help=1
-
-The path list:
-  --cmd=/testA/tT 	对命令行--cmd路径的描述，测试TT的描述
-    	  --flagname int    	Just for demo (default 123)
-
-```
 ## 错误自定义处理
 ```go
 package controller
