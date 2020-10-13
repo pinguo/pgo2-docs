@@ -9,7 +9,7 @@
   * ToFloat(v interface{}) float64 // 转换为 float
   * ToString(v interface{}) string // 转换为string
 
-### Map
+### map
   * MapMerge(a map[string]interface{}, m ...map[string]interface{}) // 合并map
   * MapGet(m map[string]interface{}, key string) interface{} // map获取字段
   * MapSet(m map[string]interface{}, key string, val interface{}) // 设置map
