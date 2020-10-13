@@ -11,11 +11,11 @@
 
 ### Map
   * MapMerge(a map[string]interface{}, m ...map[string]interface{}) // 合并map
-    *  util.MapMerge(map[string][string],map[string][string])
   * MapGet(m map[string]interface{}, key string) interface{} // map获取字段
-    * util.MapGet(map[string]map[string]string,"key1.key2")
   * MapSet(m map[string]interface{}, key string, val interface{}) // 设置map
-    * util.MapGet(map[string]map[string]string,"key1.key2","v2")
+  * ParamsToMapSlice(m map[string]interface{}) map[string]interface{} // 转换map为map/slice {"aaa[0][bbb]":"sss"} => {"aaa":[{"bbb":"sss"}]}
+  * MapToSliceString(sI interface{}) []string // 强制转换key为字符串数字的map为[]string {"1":"ss"} => ["ss"]
+  * MapToSliceInt(sI interface{}) []int // 强制转换key为字符串数字map为[]int {"1":1} => [1]
 ### misc 
   * FormatLanguage(lang string) string // 格式化语言
   * FormatVersion(ver string, minDepth int) string // 格式化版本
