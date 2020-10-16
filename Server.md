@@ -44,6 +44,9 @@ server:
     
     # debug 错误日志完整栈输出
     # debug: true
+    
+    # disableCheckListen 是否关闭检查本地监听相同端口 v0.1.127+
+    # disableCheckListen: true
 ```
 
 ## 插件说明
