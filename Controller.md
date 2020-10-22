@@ -122,6 +122,88 @@ func (w *Welcome) GET() {
 }
 ```
 
+## 命令模式 显示自定义flag参数描述(v0.1.130+)
+  * 方法描述,在注释里面以@ActionDesc 开头
+  * 参数描述，有两种方法
+    * 直接在代码里面写flag相关参数解析，系统自动识别参数说明，也会去识别Prepare 预执行函数里面的flag
+    * 注释说明 以@Params 开头，如果有注释说明，将不会去识别代码里面的flag
+  * --help 的时候会显示flag相关的参数说明
+
+```go
+
+// pgo2-demo --env production --help // 显示全局参数和--cmd的所有路径
+// pgo2-demo --env production --cmd --help // 显示全局参数和--cmd的所有路径和每个路径的所有flag参数
+// pgo2-demo --env production --cmd=/xxx/xx --help // 显示全局参数和--cmd的当前路径的所有flag参数
+
+package command
+
+import (
+	"flag"
+
+
+
+    "github.com/pinguo/pgo2"
+)
+
+type Welcome struct {
+    pgo2.Controller
+}
+
+// 
+func (w *Welcome) Prepare() {
+	
+	var flagNameBase int
+    
+    flag.IntVar(&flagNameBase, "flagNameBase", 123, "Just for demo")
+   
+}
+
+// pgo2-demo --env=dev --cmd=/welcome/index --help=1
+// @ActionDesc 对命令行--cmd路径的描述，测试index的描述
+func (w *Welcome) ActionIndex() {
+	// 
+	var flagName int
+        
+    flag.IntVar(&flagName, "flagname", 123, "Just for demo")
+    
+    flag.Parse()
+
+}
+
+// pgo2-demo --env=dev --cmd=/welcome/index2 --help=1
+// @ActionDesc 对命令行--cmd路径的描述，测试Index2的描述
+// @Params --flagAa string    	Just for demo (default 123)
+func (w *Welcome) ActionIndex2() {
+	// 
+	var flagAa int
+        
+    flag.IntVar(&flagAa, "flagAa", 111, "Just for demo")
+	flag.Int(&flagAa, "flagAaInt", 1234, "Just for demo ")
+    
+    flag.Parse()
+    
+}
+
+```
+
+## 运行一下命令会显示flag参数说明
+  * pgo2-demo --env=dev --cmd --help=1
+  *  output:
+```go
+
+Global parameters:
+     	  --base string    	set base path (optional), eg. --base=/base/path
+    	  --cmd string    	set running cmd (optional), eg. --cmd=/foo/bar
+    	  --env string    	set running env (optional), eg. --env=online
+    	  --help string    	Displays a list of CMD controllers used (optional), eg. --help=1
+
+The path list:
+  --cmd=/testA/index 	对命令行--cmd路径的描述，测试Index的描述
+    	  --flagname int    	Just for demo (default 123)
+  --cmd=/testA/index2 	对命令行--cmd路径的描述，测试Index2的描述
+          --flagAa int    	Just for demo (default 111)
+
+```
 ## 错误自定义处理
 ```go
 package controller

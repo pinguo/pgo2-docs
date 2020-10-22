@@ -170,6 +170,10 @@ map[string]string{
 - `--base /base/path`, 指定基础目录，默认为项目根目录，通常在单测时需要指定
 - `--help`, 显示所有命令，包括cmd参数列表和每个cmd路径下的flag参数说明 
 
-
+```go
+--env production --help // 显示全局参数和--cmd的所有路径
+--env production --cmd --help // 显示全局参数和--cmd的所有路径和每个路径的所有flag参数
+--env production --cmd=/xxx/xx --help // 显示全局参数和--cmd的当前路径的所有flag参数
+```
 
 
