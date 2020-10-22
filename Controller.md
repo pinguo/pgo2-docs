@@ -131,9 +131,9 @@ func (w *Welcome) GET() {
 
 ```go
 
-// pgo2-demo --env production --help // 显示全局参数和--cmd的所有路径
-// pgo2-demo --env production --cmd --help // 显示全局参数和--cmd的所有路径和每个路径的所有flag参数
-// pgo2-demo --env production --cmd=/xxx/xx --help // 显示全局参数和--cmd的当前路径的所有flag参数
+// pgo2-demo --env production --help=1 // 显示全局参数和--cmd的所有路径
+// pgo2-demo --env production --cmd --help=1 // 显示全局参数和--cmd的所有路径和每个路径的所有flag参数
+// pgo2-demo --env production --cmd=/xxx/xx --help=1 // 显示全局参数和--cmd的当前路径的所有flag参数
 
 package command
 
@@ -200,8 +200,10 @@ Global parameters:
 The path list:
   --cmd=/testA/index 	对命令行--cmd路径的描述，测试Index的描述
     	  --flagname int    	Just for demo (default 123)
+          --flagNameBase int    	Just for demo (default 123)
   --cmd=/testA/index2 	对命令行--cmd路径的描述，测试Index2的描述
           --flagAa int    	Just for demo (default 111)
+          --flagNameBase int    	Just for demo (default 123)
 
 ```
 ## 错误自定义处理
