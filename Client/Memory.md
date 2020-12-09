@@ -18,8 +18,10 @@ components:
 ## 功能列表
 
 ```go
+// 从对象池获取对象
+this.GetObjBox(adapter.MemoryClass).(adapter.IMemory)/(*adapter.Memory) // (v0.1.131+)
+// 普通方法
 NewMemory(componentId ...string) // 对象 this.GetObj(adapter.NewMemory()).(adapter.IMemory)/(*adapter.Memory)
-NewMemoryPool(iObj iface.IObject, componentId ...interface{}) // 对象池 this.GetObjPool(adapter.MemoryClass, adapter.NewMemoryPool).(adapter.IMemory)/(*adapter.Memory)
 mm.Get(key)          // 获取key的值
 mm.MGet(keys)        // 并行获取多个key的值
 mm.Set(key, val)     // 设置key的值
@@ -69,7 +71,7 @@ func (m *MemoryController) ActionSet() {
 // curl -v http://127.0.0.1:8000/memory/get
 func (m *MemoryController) ActionGet() {
     // 从对象池获取memory的上下文适配对象
-    mm := m.GetObjPool(adapter.MemoryClass, adapter.NewMemoryPool).(*adapter.Memory)
+    mm := m.GetObjBox(adapter.MemoryClass).(*adapter.Memory)
 
     // 获取string
     if val := mm.Get("test_key1"); val != nil {

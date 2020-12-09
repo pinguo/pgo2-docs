@@ -26,8 +26,10 @@ components:
 
 ## 功能列表
 ```go
+// 从对象池获取对象
+this.GetObjBox(adapter.MemCacheClass).(adapter.IMemCache)/(*adapter.MemCache) // (v0.1.131+)
+// 普通方法
 NewMemCache(componentId ...string) // 对象 this.GetObj(adapter.NewMemCache()).(adapter.IMemCache)/(*adapter.MemCache)
-NewMemCachePool(iObj iface.IObject, componentId ...interface{}) // 对象池 this.GetObjPool(adapter.MemCacheClass, adapter.NewMemCachePool).(adapter.IMemCache)/(*adapter.MemCache)
 mc.Get(key)                 // 获取key的值
 mc.MGet(keys)               // 并行获取多个key的值
 mc.Set(key, val)            // 设置key的值
@@ -81,7 +83,7 @@ func (m *MemcacheController) ActionSet() {
 // curl -v http://127.0.0.1:8000/memcache/get
 func (m *MemcacheController) ActionGet() {
     // 对象池获取memcache的上下文适配对象
-    mc := m.GetObjPool(adapter.MemCacheClass,adapter.NewMemCachePool).(*adapter.MemCache)
+    mc := m.GetObjBox(adapter.MemCacheClass).(*adapter.MemCache)
 
     // 获取string
     if val := mc.Get("test_key1"); val != nil {

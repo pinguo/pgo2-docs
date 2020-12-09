@@ -6,7 +6,7 @@
 - 支持参数验证(详见ValidateXxx方法)
 - 支持BeforeAction/AfterAction钩子
 - 支持HandlePanic钩子，捕获未处理异常
-- 提供Json,Jsonp,Data,Xml,ProtoBuf方法，方便输出各种类型数据
+- 提供Json,JsonV2,Jsonp,Data,Xml,ProtoBuf方法，方便输出各种类型数据,JsonV2会比Json多输出一个serverTime字段,值为：浮点数的时间戳,1607502373.61137
 - 提供自定义数据类型输出方法Render
 - 预处理函数Prepare(),初始化当前controller的时候执行
 

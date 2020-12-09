@@ -44,8 +44,10 @@ components:
 ## 功能列表
 
 ```go
+// 从对象池获取对象
+rabbitMq:=this.GetObjBox(adapter.RabbitMqClass).(adapter.IRabbitMq) // (v0.1.131+)
+// 普通方法
 NewRabbitMq(componentId ...string) // 对象 rabbitMq:=this.GetObj(adapter.NewRabbitMq()).(adapter.IRabbitMq)/(*adapter.RabbitMq)
-NewRabbitMqPool(iObj iface.IObject, componentId ...interface{}) // 对象池 rabbitMq:=this.GetObjPool(adapter.RabbitMqClass, adapter.NewRabbitMqPool).(adapter.IRabbitMq)/(*adapter.RabbitMq)
 rabbitMq.SetPanicRecover(v bool) // 是否Recover
 rabbitMq.ExchangeDeclare(dftExchange ...*rabbitmq.ExchangeData)               // 定义交换机
 rabbitMq.Publish(opCode, data, dftOpUid ...string)  bool           // 发布数据
@@ -88,7 +90,7 @@ func (r *RedisController) ActionConsummer() {
             Name string
         }
     //获取rabbitMq上下文适配对象
-    rabbit :=t.GetObj(adapter.NewRabbitMq()).(*adapter.RabbitMq)
+    rabbit :=t.GetObjBox(adapter.RabbitMqClass).(*adapter.RabbitMq)
     opCodes := []string{"test"}
     // 此程序为常驻程序，会一直监听消息,最好为脚本运行
     rets :=rabbit.Consume("testQueue",opCodes,1,false,false,false)
