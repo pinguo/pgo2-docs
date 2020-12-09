@@ -26,8 +26,10 @@ type Geo struct {
 ## 功能列表
 
 ```go
+// 从对象池获取对象
+this.GetObjBox(adapter.MaxMindClass).(adapter.IMaxMind)/(*adapter.MaxMind) // (v0.1.131+)
+// 普通方法
 NewMaxMind(componentId ...string) // 对象 this.GetObj(adapter.NewMaxMind()).(adapter.IMaxMind)/(*adapter.MaxMind)
-NewMaxMindPool(iObj iface.IObject, componentId ...interface{}) // 对象池 this.GetObjPool(adapter.MaxMindClass,adapter.NewMaxMindPool).(adapter.IMaxMind)/(*adapter.MaxMind) 
 mmd.GeoByIp()	// 根据IP查询GEO信息
 
 

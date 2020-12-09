@@ -23,8 +23,10 @@ components:
 ## 功能列表
 
 ```go
+// 从对象池获取对象 
+this.GetObjBox(adapter.HttpClass).(adapter.IHttp)/(*adapter.Http) // (v0.1.131+)
+// 普通方法
 NewHttp(componentId ...string) // 对象 this.GetObj(adapter.NewHttp()).(adapter.IHttp)/(*adapter.Http)
-NewHttpPool(iObj iface.IObject, componentId ...interface{}) // 对象池 this.GetObjPool(adapter.HttpClass, adapter.NewHttpPool).(adapter.IHttp)/(*adapter.Http)
 httpClient.Get()     // 执行GET操作
 httpClient.Post()    // 执行POST操作
 httpClient.Do()      // 执行自定义请求
@@ -74,7 +76,7 @@ func (h *HttpClientController) ActionSendQuery() {
 // curl -v http://127.0.0.1:8000/http-client/send-form
 func (h *HttpClientController) ActionSendForm() {
     // 从对象池获取http的上下文适配对象
-    httpClient := h.GetObjPool(adapter.HttpClass, adapter.NewHttpPool).(*adapter.Http)
+    httpClient := h.GetObjBox(adapter.HttpClass).(*adapter.Http)
 
     // 发送POST请求
     url := "http://127.0.0.1:8000/welcome/index"
@@ -124,7 +126,7 @@ func (h *HttpClientController) ActionMultiRequest() {
     // 获取http的上下文适配对象
     newCtx := h.Context().Copy()
     defer newCtx.FinishGoLog() // 刷新新上下文的日志
-    httpClient := h.GetObjPoolCtx(newCtx,adapter.HttpClass,adapter.NewHttpPool ).(*adapter.Http)
+    httpClient := h.GetObjBoxCtx(newCtx,adapter.HttpClass).(*adapter.Http)
 
     req1, _ := http.NewRequest("GET", "http://127.0.0.1:8000/welcome/index", nil)
     req2, _ := http.NewRequest("GET", "http://127.0.0.1:8000/welcome/index", nil)

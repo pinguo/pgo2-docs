@@ -10,7 +10,7 @@
 	Context() IContext
     # 获取对象并注入上下文
 	GetObj(obj IObject) IObject
-    # 从对象池获取对象并注入上下文,如果有定义Prepare方法，会自动调用,funcName!=nil,params会传入funcName，否则params会传入Prepare
+    # 从对象池获取对象并注入上下文,如果有定义Prepare方法，会自动调用,funcName!=nil,params会传入funcName，也会传入Prepare
     # (推荐用GetObjBox替换)
 	GetObjPool(className string, funcName IObjPoolFunc, params ...interface{}) IObject
     # 从对象池获取对象并注入上下文,如果有定义Prepare方法，会自动调用，并把params传入

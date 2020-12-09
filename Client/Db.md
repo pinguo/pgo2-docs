@@ -36,9 +36,10 @@ components:
 ## 功能列表
 
 ```go
+// 从对象池获取对象 
+this.GetObjBox(adapter.DbClass).(adapter.IDb)/(*adapter.Db) // (v0.1.131+)
 // 普通方法列表
 NewDb(componentId ...string) // 对象  this.GetObj(adapter.NewDb()).(adapter.IDb)/(*adapter.Db)
-NewDbPool(iObj iface.IObject, componentId ...interface{}) // 对象池 this.GetObjPool(adapter.DbClass, adapter.NewDbPool).(adapter.IDb)/(*adapter.Db)
 db.SetMaster(v bool) // 设置查询操作是否从master
 db.Begin(opts ...*sql.TxOptions) ITx // 开始一个新事务,并返回一次性的事务对象(默认超时上下文) 
 db.BeginContext(ctx context.Context, opts *sql.TxOptions) ITx // 开始一个新事务，并返回一次性的事务对象(指定上下文)
@@ -134,7 +135,7 @@ func (m *MysqlController) ActionExec() {
 func (m *MysqlController) ActionQuery() {
 
     // 对象池获取db的上下文适配对象
-    db := m.GetObjPool(adapter.DbClass, adapter.NewDbPool).(*adapter.Db)
+    db := m.GetObjBox(adapter.DbClass).(*adapter.Db)
 
     // 执行插入操作
     age := (time.Now().Nanosecond() / 1000) % 100

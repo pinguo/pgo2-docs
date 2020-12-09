@@ -37,8 +37,10 @@ components:
 ## 功能列表
 
 ```go
+// 从对象池获取对象
+this.GetObjBox(adapter.RedisClass).(*adapter.Redis) // (v0.1.131+)
+// 普通方法
 NewRedis(componentId ...string) // 对象 this.GetObject(adapter.NewRedis()).(*adapter.Redis)
-NewRedisPool(iObj iface.IObject, componentId ...interface{}) // this.GetObjPool(adapter.RedisClass, adapter.NewRedisPool).(*adapter.Redis)
 redis.Get(key)                 // 获取key的值
 redis.MGet(keys)               // 并行获取多个key的值
 redis.Set(key, val)            // 设置key的值
@@ -95,7 +97,7 @@ func (r *RedisController) ActionSet() {
 // curl -v http://127.0.0.1:8000/redis/get
 func (r *RedisController) ActionGet() {
     // 对象池获取redis的上下文适配对象
-    redis := r.GetObjPool(adapter.RedisClass, adapter.NewRedisPool).(*adapter.Redis)
+    redis := r.GetObjBox(adapter.RedisClass).(*adapter.Redis)
 
     // 获取string
     if val := redis.Get("test_key1"); val != nil {
