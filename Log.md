@@ -52,7 +52,7 @@ log:
             filePath: "@runtime/info.log"
 
             # 配置日志格式为 JSON
-            formatter: "json"
+            logFormatter: "json"
 
             # 保留历史日志文件个数，默认10
             # maxLogFile: 10
