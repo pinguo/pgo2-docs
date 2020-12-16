@@ -14,6 +14,14 @@
 ## pgo2.App().Log().Target("error").SetFormatter(format IFormatter) // (可选) 自定义日志格式
 
 根据targets下配置的target名字分别定义日志格式
+
+### 将访问日志配置为JSON格式
+
+```go
+// main.go
+pgo2.App().Server().SetAccessLogFormat(logs.JSONAccessFormatter) // 一般配合JSON格式日志使用
+```
+
 ## 配置文件
 ```yaml
 # app.components.log
@@ -42,6 +50,9 @@ log:
 
             # 日志文件路径，支持别名
             filePath: "@runtime/info.log"
+
+            # 配置日志格式为 JSON
+            formatter: "json"
 
             # 保留历史日志文件个数，默认10
             # maxLogFile: 10
