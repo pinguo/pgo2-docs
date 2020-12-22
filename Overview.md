@@ -149,11 +149,12 @@ go modules
    
     ```
 6. 创建控制器(pkg/controller/welcomeController.go)
+需要提前注册controller : https://github.com/pinguo/pgo2-demo/blob/master/pkg/controller/init.go
     ```go
     package controller
 
     import (
-        "service"
+        "pgo2/pkg/service"
         "net/http"
      
         "github.com/pinguo/pgo2"
@@ -184,11 +185,11 @@ go modules
     
         // 打印日志
         ctx.Info("request from welcome, name:%s, age:%d, ip:%s", name, age, ip)
-        ctx.PushLog("clientIp", ctx.GetClientIp()) // 生成clientIp=xxxxx在pushlog中
+        ctx.PushLog("clientIp", ctx.ClientIp()) // 生成clientIp=xxxxx在pushlog中
     
         // 调用业务逻辑，一个请求生命周期内的对象都要通过GetObj()获取，
         // 这样可自动查找注册的类，并注入请求上下文(Context)到对象中。
-        svc := w.GetObj(service.NewWelcome()).(*Service.Welcome)
+        svc := w.GetObj(service.NewWelcome()).(*service.Welcome)
     
         // 添加耗时到profile日志中
         ctx.ProfileStart("Welcome.SayHello")
