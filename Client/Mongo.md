@@ -1,6 +1,6 @@
 # Mongo
-
-Mongo组件是对`github.com/globalsign/mgo`的封装，更多文档请参见[mgo](https://github.com/globalsign/mgo)。
+  * 推荐使用[mongodb](Mongodb.md),此组件为放弃组件
+  * Mongo组件是对`github.com/globalsign/mgo`的封装，更多文档请参见[mgo](https://github.com/globalsign/mgo)。
 
 ## 配置文件
 

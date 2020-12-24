@@ -168,7 +168,7 @@ func (d *Demo) Index(){
     l6.Show()
     
     // 从对象池获取对象并注入上下文,并初始化函数
-    l7 := d.GetObjBox(LogicData5Class, "aa","bb").(*LogicData5)
+    l7 := d.GetObjBoxCtx(d.Context().Copy(), LogicData5Class, "aa","bb").(*LogicData5)
     l7.Show()
 }
 
