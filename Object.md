@@ -5,7 +5,7 @@
 ## 方法列表
 ```go
     # 设置上下文
-	SetContext(ctx IContext)
+	SetContext(ctx IContext) IObject
     # 获取上下文
 	Context() IContext
     # 获取对象并注入上下文
