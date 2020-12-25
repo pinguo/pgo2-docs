@@ -134,6 +134,12 @@ Cursor() CursorI
 Apply(change Change, result interface{}) error
 // 指定索引
 Hint(hint interface{}) IMongodbQuery
+
+// IMongodbAggregate
+// 
+All(results interface{}) error
+One(result interface{}) error
+Iter() qmgo.CursorI
 ```
 
 ## 使用说明
