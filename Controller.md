@@ -9,6 +9,7 @@
 - 提供Json,JsonV2,Jsonp,Data,Xml,ProtoBuf方法，方便输出各种类型数据,JsonV2会比Json多输出一个serverTime字段,值为：浮点数的时间戳,1607502373.61137
 - 提供自定义数据类型输出方法Render
 - 预处理函数Prepare(),初始化当前controller的时候执行
+- 动作函数支持返回值，方便在外层统一对返回值进行输出
 
 由于控制器是请求的入口，需要在main包中手动导入，为方便起见，建议不论controller层有多深统一在controller或command包的init方法中注册。
 
@@ -113,6 +114,11 @@ func (w *Welcome) ActionSayHello() {
 func (w *Welcome) ActionRegexpExample(p1, p2 string) {
     data := map[string]interface{}{"p1": p1, "p2": p2}
     w.Json(data, http.StatusOK)
+}
+
+// 返回值，由控制器 Response 方法统一处理返回
+func (w *Welconme) ActionProfile() (interface{}, error) {
+    return struct{Name string, Age int}{"John", 12}, nil
 }
 
 // RESTful动作，url中没有指定动作名，使用请求方法作为动作的名称(需要大写)
@@ -247,3 +253,37 @@ func (e *Error) other(status int, message string){
 	// e.View("other.html",message)
 }
 ```
+
+## 方法返回值
+
+### 函数签名
+
+返回值可以是0个，1个或2个。具有如下所示的签名：
+
+```go
+// 无返回
+func (f *FooController) ActionBar() {}
+
+// 一个普通返回值，当然可以是 int,struct,map 等其他类型
+func (f *FooController) ActionBar() interface{} {}
+
+// 返回一个 error，若 error 存在默认会调用 ErrorController 处理
+func (f *FooController) ActionBar() error {}
+
+// 返回两个值，第二个返回值一般为 error，若不是 error 将被忽略
+func (f *FooController) ActionBar() (interface{}, error) {}
+
+// 返回一个 render 和 error， render 默认会被控制器的 Render 处理
+func (f *FooController) ActionBar() (render.Render, error) {}
+```
+
+### 自定义对返回值的处理逻辑
+
+在控制器中覆写 `iface.IController.Response(interface{}, error)` 方法以自行处理返回值
+
+```go
+func (c *BaseController) Response(v interface{}, error) {
+    // 自定义处理逻辑
+}
+```
+
