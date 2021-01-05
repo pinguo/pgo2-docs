@@ -41,17 +41,52 @@ components:
 this.GetObjBox(adapter.RedisClass).(*adapter.Redis) // (v0.1.131+)
 // 普通方法
 NewRedis(componentId ...string) // 对象 this.GetObject(adapter.NewRedis()).(*adapter.Redis)
-redis.Get(key)                 // 获取key的值
-redis.MGet(keys)               // 并行获取多个key的值
-redis.Set(key, val)            // 设置key的值
-redis.MSet(items)              // 并行设置多个key的值
-redis.Add(key, val)            // 添加key的值(key存在时添加失败)
-redis.MAdd(items)              // 并行添加多个key的值
-redis.Del(key)                 // 删除key的值
-redis.MDel(keys)               // 并行删除多个key的值
-redis.Exists(key)              // 判断key是否存在
-redis.Incr(key1, delta)        // 累加key的值
-redis.Do(key1, delta)          // 可以使用更多的读写命令
+redis.Get(key) *value.Value                  // 获取key的值
+redis.MGet(keys) map[string]*value.Value               // 并行获取多个key的值
+redis.Set(key, val) bool           // 设置key的值
+redis.MSet(items) bool             // 并行设置多个key的值
+redis.Add(key, val) bool           // 添加key的值(key存在时添加失败)
+redis.MAdd(items) bool             // 并行添加多个key的值
+redis.Del(key) bool                // 删除key的值
+redis.MDel(keys)  bool             // 并行删除多个key的值
+redis.Exists(key) bool             // 判断key是否存在
+redis.Incr(key1, delta) int       // 累加key的值
+redis.Do(key1, delta) interface{}          // 可以使用更多的读写命令
+redis.SetPanicRecover(v bool)
+redis.Get(key string) *value.Value // 获取key的值
+redis.MGet(keys []string) map[string]*value.Value // 并行获取多个key的值
+redis.Set(key string, value interface{}, expire ...time.Duration) bool  // 设置key的值
+redis.MSet(items map[string]interface{}, expire ...time.Duration) bool // 并行设置多个key的值
+redis.Add(key string, value interface{}, expire ...time.Duration) bool // 添加key的值(key存在时添加失败)
+redis.MAdd(items map[string]interface{}, expire ...time.Duration) bool // 并行添加多个key的值
+redis.Del(key string) bool // 删除key的值
+redis.MDel(keys []string) bool  // 并行删除多个key的值
+redis.Exists(key string) bool // 判断key是否存在
+redis.Incr(key string, delta int) int // 累加key的值
+redis.Do(cmd string, args ...interface{}) interface{} // 可以使用更多的读写命令
+redis.ExpireAt(key string, timestamp int64) bool // 设置过期时间时间点，unix数字，单位秒
+redis.Expire(key string, expire time.Duration) bool  // 设置有效期，单位秒
+redis.RPush(key string, values ...interface{}) bool
+redis.LPush(key string, values ...interface{}) bool
+redis.RPop(key string) *value.Value
+redis.LPop(key string) *value.Value
+redis.LLen(key string) int
+redis.HDel(key string,fields...interface{}) int
+redis.HExists(key, field string) bool
+redis.HSet(key string, fv ...interface{}) bool
+redis.HGet(key, field string) *value.Value
+redis.HGetAll(key string) map[string]*value.Value
+redis.HMSet(key string, fv ...interface{}) bool
+redis.HMGet(key string, fields ...interface{}) map[string]*value.Value
+redis.HIncrBy(key, field string, delta int) int
+redis.ZRange(key string, start, end int) []*value.Value
+redis.ZRevRange(key string, start, end int) []*value.Value
+redis.ZRangeWithScores(key string, start, end int) []*redis.ZV
+redis.ZRevRangeWithScores(key string, start, end int) []*redis.ZV
+redis.ZAdd(key string, members ...*redis.Z) int
+redis.ZAddOpt(key string,opts []string, members ...*redis.Z) (int,error) // 增加数据，并可以传入选项 NX XX CH等
+redis.ZCard(key string) int
+redis.ZRem(key string,members ...interface{}) int
 
 // TODO 其它非cache功能
 ```
