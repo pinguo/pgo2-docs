@@ -38,56 +38,46 @@ components:
 
 ```go
 // 从对象池获取对象
-this.GetObjBox(adapter.RedisClass).(*adapter.Redis) // (v0.1.131+)
-// 普通方法
-NewRedis(componentId ...string) // 对象 this.GetObject(adapter.NewRedis()).(*adapter.Redis)
-redis.Get(key) *value.Value                  // 获取key的值
-redis.MGet(keys) map[string]*value.Value               // 并行获取多个key的值
-redis.Set(key, val) bool           // 设置key的值
-redis.MSet(items) bool             // 并行设置多个key的值
-redis.Add(key, val) bool           // 添加key的值(key存在时添加失败)
-redis.MAdd(items) bool             // 并行添加多个key的值
-redis.Del(key) bool                // 删除key的值
-redis.MDel(keys)  bool             // 并行删除多个key的值
-redis.Exists(key) bool             // 判断key是否存在
-redis.IncrBy(key1, delta) (int,error)       // 累加key的值
-redis.Do(key1, delta) interface{}          // 可以使用更多的读写命令
-redis.SetPanicRecover(v bool)
-redis.Get(key string) *value.Value // 获取key的值
-redis.MGet(keys []string) map[string]*value.Value // 并行获取多个key的值
-redis.Set(key string, value interface{}, expire ...time.Duration) bool  // 设置key的值
-redis.MSet(items map[string]interface{}, expire ...time.Duration) bool // 并行设置多个key的值
-redis.Add(key string, value interface{}, expire ...time.Duration) bool // 添加key的值(key存在时添加失败)
-redis.MAdd(items map[string]interface{}, expire ...time.Duration) bool // 并行添加多个key的值
-redis.Del(key string) bool // 删除key的值
-redis.MDel(keys []string) bool  // 并行删除多个key的值
-redis.Exists(key string) bool // 判断key是否存在
-redis.Incr(key string, delta int) int // 累加key的值
-redis.Do(cmd string, args ...interface{}) interface{} // 可以使用更多的读写命令
-redis.ExpireAt(key string, timestamp int64) bool // 设置过期时间时间点，unix数字，单位秒
-redis.Expire(key string, expire time.Duration) bool  // 设置有效期，单位秒
-redis.RPush(key string, values ...interface{}) bool
-redis.LPush(key string, values ...interface{}) bool
-redis.RPop(key string) *value.Value
-redis.LPop(key string) *value.Value
-redis.LLen(key string) int
-redis.HDel(key string,fields...interface{}) int
-redis.HExists(key, field string) bool
-redis.HSet(key string, fv ...interface{}) bool
-redis.HGet(key, field string) *value.Value
-redis.HGetAll(key string) map[string]*value.Value
-redis.HMSet(key string, fv ...interface{}) bool
-redis.HMGet(key string, fields ...interface{}) map[string]*value.Value
-redis.HIncrBy(key, field string, delta int) int
-redis.ZRange(key string, start, end int) []*value.Value
-redis.ZRevRange(key string, start, end int) []*value.Value
-redis.ZRangeWithScores(key string, start, end int) []*redis.ZV
-redis.ZRevRangeWithScores(key string, start, end int) []*redis.ZV
-redis.ZAdd(key string, members ...*redis.Z) int
-redis.ZAddOpt(key string,opts []string, members ...*redis.Z) (int,error) // 增加数据，并可以传入选项 NX XX CH等
-redis.ZCard(key string) int
-redis.ZRem(key string,members ...interface{}) int
+this.GetObjBox(adapter.RedisClass).(*adapter.Redis/adapter.IRedis) // (v0.1.131+)
+// 初始化方法
+NewRedis(componentId ...string) // 对象 this.GetObj(adapter.NewRedis()).(*adapter.Redis/adapter.IRedis)
 
+// redis 方法
+SetPanicRecover(v bool)
+Get(key string) *value.Value // 获取key的值
+MGet(keys []string) map[string]*value.Value  // 并行获取多个key的值
+Set(key string, value interface{}, expire ...time.Duration) bool  // 设置key的值
+MSet(items map[string]interface{}, expire ...time.Duration) bool // 并行设置多个key的值
+Add(key string, value interface{}, expire ...time.Duration) bool // 添加key的值(key存在时添加失败)
+MAdd(items map[string]interface{}, expire ...time.Duration) bool // 并行添加多个key的值
+Del(key string) bool // 删除key的值
+MDel(keys []string) bool // 并行删除多个key的值
+Exists(key string) bool // 判断key是否存在
+IncrBy(key string, delta int64) (int64, error)  // 累加key的值
+Do(cmd string, args ...interface{}) interface{} // 可以使用更多的读写命令
+ExpireAt(key string, timestamp int64) bool // 设置过期时间时间点，unix数字，单位秒
+Expire(key string, expire time.Duration) bool // 设置有效期，单位秒
+RPush(key string, values ...interface{}) bool
+LPush(key string, values ...interface{}) bool
+RPop(key string) *value.Value
+LPop(key string) *value.Value
+LLen(key string) int64
+HDel(key string, fields ...interface{}) int64
+HExists(key, field string) bool
+HSet(key string, fv ...interface{}) bool
+HGet(key, field string) *value.Value
+HGetAll(key string) map[string]*value.Value
+HMSet(key string, fv ...interface{}) bool
+HMGet(key string, fields ...interface{}) map[string]*value.Value
+HIncrBy(key, field string, delta int64) (int64, error)
+ZRange(key string, start, end int) []*value.Value
+ZRevRange(key string, start, end int) []*value.Value
+ZRangeWithScores(key string, start, end int) []*redis.ZV
+ZRevRangeWithScores(key string, start, end int) []*redis.ZV
+ZAdd(key string, members ...*redis.Z) int64
+ZAddOpt(key string, opts []string, members ...*redis.Z) (int64, error) // 增加数据，并可以传入选项 NX XX CH等
+ZCard(key string) int64
+ZRem(key string, members ...interface{}) int64
 // TODO 其它非cache功能
 ```
 
