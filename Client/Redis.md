@@ -50,7 +50,7 @@ redis.MAdd(items) bool             // 并行添加多个key的值
 redis.Del(key) bool                // 删除key的值
 redis.MDel(keys)  bool             // 并行删除多个key的值
 redis.Exists(key) bool             // 判断key是否存在
-redis.Incr(key1, delta) int       // 累加key的值
+redis.IncrBy(key1, delta) (int,error)       // 累加key的值
 redis.Do(key1, delta) interface{}          // 可以使用更多的读写命令
 redis.SetPanicRecover(v bool)
 redis.Get(key string) *value.Value // 获取key的值
