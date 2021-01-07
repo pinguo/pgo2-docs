@@ -40,7 +40,7 @@ components:
 // 从对象池获取对象
 this.GetObjectBox(adapter.MongoClass,db, coll)).(adapter.IMongo)/(*adapter.Mongo) // (v0.1.131+)
 // 普通方法
-NewMongo(db, coll string, componentId ...string) // 对象 this.GetObject(adapter.NewMongo(db, coll)).(adapter.IMongo)/(*adapter.Mongo)
+NewMongo(db, coll string, componentId ...string) // 对象 this.GetObj(adapter.NewMongo(db, coll)).(adapter.IMongo)/(*adapter.Mongo)
 mongo.FindOne()        // 查找满足条件的单个文档
 mongo.FindAll()        // 查找满足条件的所有文档
 mongo.FindAndModify()  // 查找并更新
