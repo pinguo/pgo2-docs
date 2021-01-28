@@ -29,6 +29,7 @@ PGO2应用框架即"Pinguo GO application framework 2.0"，是Camera360服务端
     * [Mongo](Client/Mongo.md)
     * [Redis](Client/Redis.md)
     * [RabbitMq](Client/RabbitMq.md)
+    * [Elasticsearch](Client/Es.md)
 * [单元测试](UnitTesting.md)
 * [常用方法](Util.md)
 * [错误包](PError.md)
