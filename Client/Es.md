@@ -1,6 +1,6 @@
-# Db
+# Es
 
-Es组件(DB)是对Elasticsearch封装,支持批量和异步写入
+Es组件是对Elasticsearch封装,支持批量和异步写入
 
 ## 配置文件
 
@@ -9,10 +9,10 @@ app.yaml
 # 组件ID，es组件可以配置多个，只要分配唯一的组件ID, 通过
 # GetObj(adapter.NewEs(), <id>)来获取非默认es组件
 components:
-    db:
+    es:
       # host
       esHost: "http://127.0.0.1:9200/"
-      # 默认http
+      # 默认http 组件
       # httpId:    "http" 
       # 默认0重试1次
       # retryNum: 0
